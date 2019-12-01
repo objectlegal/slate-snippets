@@ -3,7 +3,7 @@ Slate snippets
 
 # General
 
-##Queries
+## Queries
 
 ### Paths
 Current anchor path
