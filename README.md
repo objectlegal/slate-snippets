@@ -1,0 +1,2 @@
+# slate-snippets
+Slate snippets
