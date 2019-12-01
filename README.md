@@ -3,6 +3,7 @@ Slate snippets
 
 # General
 
+##Queries
 Current anchor path
 ```
 editor.selection.anchor.path
@@ -22,7 +23,7 @@ const node = Node.get(editor, path)
 
 Get path by node
 ```
-ReactEditor.findPath(editor, node)
+const path = ReactEditor.findPath(editor, node)
 ```
 
 Find a node's DOM node
@@ -39,7 +40,7 @@ Insert text at selection
 ```
 Editor.insertText(editor, 'some text');
 ```
-
+## Commands
 Insert nodes at selection
 ```
 Editor.insertNodes(editor, [
@@ -69,8 +70,8 @@ Editor.insertNodes(editor, [
     { type: 'link', url:'x', children: [{ text:'mja', marks:[] }] },
     { text: '', marks:[] },
 ]);
-const nextpath = Editor.next(editor, editor.selection.anchor.path, 'text')[1]
-Editor.setSelection(editor, {anchor:{path:nextpath, offset:0}, focus:{path:nextpath, offset:0}})
+const nextPoint = Editor.after(editor, editor.selection.anchor);
+Editor.setSelection(editor, {anchor:nextPoint, focus:nextPoint})
 ```
 Test insert after above commands
 ```
@@ -78,9 +79,9 @@ Editor.insertText(editor, 'text in the following text node')
 ```
 
 
-# Some helper functions
+# Setup & Helpers
 
-## Create a withPlugins hook
+## Create a withPlugins hook / composer
 ```
 import * as plugins from './plugins/';
 
@@ -113,6 +114,7 @@ const findById = (root, id, path=[]) => {
 }
 ```
 
+## Useful editor extending methods
 
 Add or replace data for a node. Doesn't overwrite.
 Call with editor.addData(data, node) or editor.addData(data, path)
@@ -126,8 +128,8 @@ editor.addData = (data, nodeOrPath) => {
 }
 ```
 
-
-Non sophisticated helper fn used by addData above
+You could use 'deepmerge' or other library as a 'dataAdder'
+Or use a non sophisticated function as follows
 ```
 const dataAdder = (inputData, existingData) => {
     if(typeof existingData !== 'object' || Array.isArray(existingData) || existingData === null) existingData = {};
