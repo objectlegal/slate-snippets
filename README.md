@@ -4,6 +4,8 @@ Slate snippets
 # General
 
 ##Queries
+
+### Paths
 Current anchor path
 ```
 editor.selection.anchor.path
@@ -15,7 +17,7 @@ Trim a path to get the parent (e.g. transform [4,2,3] to [4,2])
 const parentPath = Path.parent(path);
 ```
 
-
+### Nodes, domNode, path
 Get node by path
 ```
 const node = Node.get(editor, path)
@@ -36,11 +38,17 @@ Get closest block
 const [blockNode, path] = Editor.match(editor, path, 'block');
 ```
 
+Get parent and path of node
+```
+const [node, path] = Editor.parent(editor, nodePath)  // <- using specific node path, see above how to get paths
+```
+## Commands
+
 Insert text at selection
 ```
 Editor.insertText(editor, 'some text');
 ```
-## Commands
+
 Insert nodes at selection
 ```
 Editor.insertNodes(editor, [
