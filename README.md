@@ -72,6 +72,11 @@ Set node
 Editor.setNodes(editor, {type: 'paragraph'}, {at: path})
 ```
 
+Set node text
+```
+editor.apply({type: 'set_node', path, properties: node, newProperties: {text: 'updated text'}})
+```
+
 Insert inline + text & navigate to text
 ```
 Editor.insertNodes(editor, [
@@ -140,12 +145,15 @@ You could use 'deepmerge' or other library as a 'dataAdder'
 Or use a non sophisticated function as follows
 ```
 const dataAdder = (inputData, existingData) => {
+    const newData = {};
     if(typeof existingData !== 'object' || Array.isArray(existingData) || existingData === null) existingData = {};
-    for(var prop in inputData) {
+    for(var prop in existingData) {
       if(typeof inputData[prop] === 'object' && !Array.isArray(inputData[prop]) && inputData[prop] !== null)
-        existingData[prop] = dataAdder(inputData[prop], existingData[prop]);
+        newData[prop] = dataAdder(inputData[prop], existingData[prop]);
+      else if(newData.hasOwnProperty(prop))
+        newData[prop] = inputData[prop];
       else
-        existingData[prop] = inputData[prop];
+        newData[prop] = existinData[prop];
     }
     return existingData;
 }
