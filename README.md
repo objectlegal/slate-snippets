@@ -6,50 +6,50 @@ Slate snippets
 ## Queries
 
 ### Paths
-Current anchor path
+#### Current anchor path
 ```
 editor.selection.anchor.path
 ```
 
 
-Trim a path to get the parent (e.g. transform [4,2,3] to [4,2])
+#### Trim a path to get the parent (e.g. transform [4,2,3] to [4,2])
 ```
 const parentPath = Path.parent(path);
 ```
 
 ### Nodes, domNode, path
-Get node by path
+#### Get node by path
 ```
 const node = Node.get(editor, path)
 ```
 
-Get path by node
+#### Get path by node
 ```
 const path = ReactEditor.findPath(editor, node)
 ```
 
-Find a node's DOM node
+#### Find a node's DOM node
 ```
 const domNode = ReactEditor.toDOMNode(editor, node)
 ```
 
-Get closest block
+#### Get closest block
 ```
 const [blockNode, path] = Editor.match(editor, path, 'block');
 ```
 
-Get parent and path of node
+#### Get parent and path of node
 ```
 const [node, path] = Editor.parent(editor, nodePath)  // <- using specific node path, see above how to get paths
 ```
 ## Commands
 
-Insert text at selection
+#### Insert text at selection
 ```
 Editor.insertText(editor, 'some text');
 ```
 
-Insert nodes at selection
+#### Insert nodes at selection
 ```
 Editor.insertNodes(editor, [
     {type:'inline_type', children:[{text: 'some text', marks:[]}]},
@@ -58,7 +58,7 @@ Editor.insertNodes(editor, [
 );
 ```
 
-Insert node at beginning of document
+#### Insert node at beginning of document
 ```
 Editor.insertNodes(editor, [
     {type:'paragraph', children:[{text: 'some text', marks:[]}]},
@@ -67,17 +67,17 @@ Editor.insertNodes(editor, [
 );
 ```
 
-Set node
+#### Set node
 ```
 Editor.setNodes(editor, {type: 'paragraph'}, {at: path})
 ```
 
-Set node text
+#### Set node text
 ```
-editor.apply({type: 'set_node', path, properties: node, newProperties: {text: 'updated text'}})
+Editor.insertText(editor, 'new text', {at: path})
 ```
 
-Insert inline + text & navigate to text
+#### Insert inline + text & navigate to text
 ```
 Editor.insertNodes(editor, [
     { type: 'link', url:'x', children: [{ text:'mja', marks:[] }] },
@@ -86,7 +86,7 @@ Editor.insertNodes(editor, [
 const nextPoint = Editor.after(editor, editor.selection.anchor);
 Editor.setSelection(editor, {anchor:nextPoint, focus:nextPoint})
 ```
-Test insert after above commands
+#### Test insert after above commands
 ```
 Editor.insertText(editor, 'text in the following text node')
 ```
@@ -113,7 +113,7 @@ the file plugins/index.js exports all the plugins, e.g. export * from "./plugin1
 
 ## Other helpers
 
-Find the node and path by custom id
+#### Find the node and path by custom id
 ```
 const findById = (root, id, path=[]) => {
   if(!root || !root.children || !id) return;
@@ -129,7 +129,7 @@ const findById = (root, id, path=[]) => {
 
 ## Useful editor extending methods
 
-Add or replace data for a node. Doesn't overwrite.
+#### Add or replace data for a node. Doesn't overwrite.
 Call with editor.addData(data, node) or editor.addData(data, path)
 ```
 editor.addData = (data, nodeOrPath) => {
