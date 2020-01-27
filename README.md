@@ -7,50 +7,50 @@ Slate snippets
 
 ### Paths
 #### Current anchor path
-```
+```js
 editor.selection.anchor.path
 ```
 
 
 #### Trim a path to get the parent (e.g. transform [4,2,3] to [4,2])
-```
+```js
 const parentPath = Path.parent(path);
 ```
 
 ### Nodes, domNode, path
 #### Get node by path
-```
+```js
 const node = Node.get(editor, path)
 ```
 
 #### Get path by node
-```
+```js
 const path = ReactEditor.findPath(editor, node)
 ```
 
 #### Find a node's DOM node
-```
+```js
 const domNode = ReactEditor.toDOMNode(editor, node)
 ```
 
 #### Get closest block
-```
+```js
 const [blockNode, path] = Editor.match(editor, path, 'block');
 ```
 
 #### Get parent and path of node
-```
+```js
 const [node, path] = Editor.parent(editor, nodePath)  // <- using specific node path, see above how to get paths
 ```
 ## Commands
 
 #### Insert text at selection
-```
+```js
 Editor.insertText(editor, 'some text');
 ```
 
 #### Insert nodes at selection
-```
+```js
 Editor.insertNodes(editor, [
     {type:'inline_type', children:[{text: 'some text', marks:[]}]},
     {text: ' and some text after the inline', marks: []}
@@ -59,7 +59,7 @@ Editor.insertNodes(editor, [
 ```
 
 #### Insert node at beginning of document
-```
+```js
 Editor.insertNodes(editor, [
     {type:'paragraph', children:[{text: 'some text', marks:[]}]},
   ],
@@ -68,17 +68,17 @@ Editor.insertNodes(editor, [
 ```
 
 #### Set node
-```
+```js
 Editor.setNodes(editor, {type: 'paragraph'}, {at: path})
 ```
 
 #### Set node text
-```
+```js
 Editor.insertText(editor, 'new text', {at: path})
 ```
 
 #### Insert inline + text & navigate to text
-```
+```js
 Editor.insertNodes(editor, [
     { type: 'link', url:'x', children: [{ text:'mja', marks:[] }] },
     { text: '', marks:[] },
@@ -87,7 +87,7 @@ const nextPoint = Editor.after(editor, editor.selection.anchor);
 Editor.setSelection(editor, {anchor:nextPoint, focus:nextPoint})
 ```
 #### Test insert after above commands
-```
+```js
 Editor.insertText(editor, 'text in the following text node')
 ```
 
@@ -95,7 +95,7 @@ Editor.insertText(editor, 'text in the following text node')
 # Setup & Helpers
 
 ## Create a withPlugins hook / composer
-```
+```js
 import * as plugins from './plugins/';
 
 export const withPlugins = (editor) => {
@@ -114,7 +114,7 @@ the file plugins/index.js exports all the plugins, e.g. export * from "./plugin1
 ## Other helpers
 
 #### Find the node and path by custom id
-```
+```js
 const findById = (root, id, path=[]) => {
   if(!root || !root.children || !id) return;
 	const childLen = root.children.length;
@@ -131,7 +131,7 @@ const findById = (root, id, path=[]) => {
 
 #### Add or replace data for a node. Doesn't overwrite.
 Call with editor.addData(data, node) or editor.addData(data, path)
-```
+```js
 editor.addData = (data, nodeOrPath) => {
     const isNode = Node.isNode(nodeOrPath);
     if(!isNode && !Path.isPath(nodeOrPath)) return;
@@ -143,7 +143,7 @@ editor.addData = (data, nodeOrPath) => {
 
 You could use 'deepmerge' or other library as a 'dataAdder'
 Or use a non sophisticated function as follows
-```
+```js
 const dataAdder = (inputData, existingData) => {
     const newData = {};
     if(typeof existingData !== 'object' || Array.isArray(existingData) || existingData === null) existingData = {};
