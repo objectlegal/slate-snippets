@@ -46,12 +46,12 @@ const [node, path] = Editor.parent(editor, nodePath)  // <- using specific node 
 
 #### Insert text at selection
 ```js
-Editor.insertText(editor, 'some text');
+Transforms.insertText(editor, 'some text');
 ```
 
 #### Insert nodes at selection
 ```js
-Editor.insertNodes(editor, [
+Transforms.insertNodes(editor, [
     {type:'inline_type', children:[{text: 'some text', marks:[]}]},
     {text: ' and some text after the inline', marks: []}
   ]
@@ -60,7 +60,7 @@ Editor.insertNodes(editor, [
 
 #### Insert node at beginning of document
 ```js
-Editor.insertNodes(editor, [
+Transforms.insertNodes(editor, [
     {type:'paragraph', children:[{text: 'some text', marks:[]}]},
   ],
   {at:[0]}
@@ -69,17 +69,17 @@ Editor.insertNodes(editor, [
 
 #### Set node
 ```js
-Editor.setNodes(editor, {type: 'paragraph'}, {at: path})
+Transforms.setNodes(editor, {type: 'paragraph'}, {at: path})
 ```
 
 #### Set node text
 ```js
-Editor.insertText(editor, 'new text', {at: path})
+Transforms.insertText(editor, 'new text', {at: path})
 ```
 
 #### Insert inline + text & navigate to text
 ```js
-Editor.insertNodes(editor, [
+Transforms.insertNodes(editor, [
     { type: 'link', url:'x', children: [{ text:'mja', marks:[] }] },
     { text: '', marks:[] },
 ]);
@@ -88,7 +88,7 @@ Editor.setSelection(editor, {anchor:nextPoint, focus:nextPoint})
 ```
 #### Test insert after above commands
 ```js
-Editor.insertText(editor, 'text in the following text node')
+Transforms.insertText(editor, 'text in the following text node')
 ```
 
 
@@ -137,26 +137,12 @@ editor.addData = (data, nodeOrPath) => {
     if(!isNode && !Path.isPath(nodeOrPath)) return;
     const node = isNode ? nodeOrPath : Node.get(editor, nodeOrPath);
     const path = !isNode ? nodeOrPath : ReactEditor.findPath(editor, node);
-    Editor.setNodes(editor, {data: dataAdder(data, node.data)}, {at: path})
+    Editor.setNodes(editor, {data: deepmerge(data, node.data)}, {at: path})
 }
 ```
 
-You could use 'deepmerge' or other library as a 'dataAdder'
-Or use a non sophisticated function as follows
-```js
-const dataAdder = (inputData, existingData) => {
-    const newData = {};
-    if(typeof existingData !== 'object' || Array.isArray(existingData) || existingData === null) existingData = {};
-    for(var prop in existingData) {
-      if(typeof inputData[prop] === 'object' && !Array.isArray(inputData[prop]) && inputData[prop] !== null)
-        newData[prop] = dataAdder(inputData[prop], existingData[prop]);
-      else if(newData.hasOwnProperty(prop))
-        newData[prop] = inputData[prop];
-      else
-        newData[prop] = existinData[prop];
-    }
-    return existingData;
-}
+You could use 'deepmerge' or other library for merging data
+
 ```
 
 
