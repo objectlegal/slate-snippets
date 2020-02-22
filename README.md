@@ -146,15 +146,14 @@ You could use 'deepmerge' or other library for merging data
 ```
 
 ## Convert data from v0.47 to v.0.50+
-```
-const convertNode = (node) => {
-  const { object, type, data, nodes, ...rest } = node;
+```const convertNode = (node) => {
+  const { object, type, data, nodes, ...rest } = node
   // We drop `object`, pull up data, convert `nodes` to children and copy the rest across
   const element = {
     type,
     ...rest,
     ...(nodes ? { children: nodes.map(convertNode) } : {}),
-  };
+  }
   if ((!element.type || element.type === 'text') && typeof element.text !== 'undefined') {
     delete element.type;
     if(Array.isArray(element.marks)) {
@@ -168,20 +167,19 @@ const convertNode = (node) => {
     }
   }
   if(data) element.data = data;
-  if(element.type) element.type = element.type.replace("-", "_");
+  if(element.type) element.type = element.type.replace("-", "_")
   // Atomic blocks must now have children
   if (element.type && !element.children) {
     element.children = [
       {
         text: '',
       },
-    ];
+    ]
   }
-  return element;
+  return element
 };
 const convertSlate047to050 = (object) => {
-  const { nodes } = object.document;
-  return nodes.map(convertNode);
-};
-```
+  const { nodes } = object.document
+  return nodes.map(convertNode)
+}```
 
