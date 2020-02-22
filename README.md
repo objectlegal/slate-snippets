@@ -143,10 +143,11 @@ editor.addData = (data, nodeOrPath) => {
 
 You could use 'deepmerge' or other library for merging data
 
-```
+
 
 ## Convert data from v0.47 to v.0.50+
-```const convertNode = (node) => {
+```js
+const convertNode = (node) => {
   const { object, type, data, nodes, ...rest } = node
   // We drop `object`, pull up data, convert `nodes` to children and copy the rest across
   const element = {
@@ -181,5 +182,6 @@ You could use 'deepmerge' or other library for merging data
 const convertSlate047to050 = (object) => {
   const { nodes } = object.document
   return nodes.map(convertNode)
-}```
+}
+```
 
