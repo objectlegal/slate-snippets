@@ -42,6 +42,13 @@ const [blockNode, path] = Editor.match(editor, path, 'block');
 ```js
 const [node, path] = Editor.parent(editor, nodePath)  // <- using specific node path, see above how to get paths
 ```
+
+#### move the cursos to the end of the document
+```js
+ReactEditor.focus(editor);
+Transforms.select(editor, Editor.end(editor, []));
+```
+
 ## Commands
 
 #### Insert text at selection
