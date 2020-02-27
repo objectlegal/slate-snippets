@@ -175,7 +175,8 @@ const convertNode = (node) => {
     }
   }
   if(data) element.data = data;
-  if(element.type) element.type = element.type.replace("-", "_")
+  // if(element.type) element.type = element.type.replace("-", "_")
+  
   // Atomic blocks must now have children
   if (element.type && !element.children) {
     element.children = [
