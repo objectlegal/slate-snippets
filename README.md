@@ -43,7 +43,7 @@ const [blockNode, path] = Editor.above(editor, {match: n => editor.isBlock(n)})
 const [node, path] = Editor.parent(editor, nodePath)  // <- using specific node path, see above how to get paths
 ```
 
-#### move the cursos to the end of the document
+#### move the cursor to the end of the document
 ```js
 ReactEditor.focus(editor);
 Transforms.select(editor, Editor.end(editor, []));
@@ -93,7 +93,7 @@ Transforms.insertNodes(editor, [
 const nextPoint = Editor.after(editor, editor.selection.anchor);
 Editor.setSelection(editor, {anchor:nextPoint, focus:nextPoint})
 ```
-#### Test insert after above commands
+#### Insert text after above commands
 ```js
 Transforms.insertText(editor, 'text in the following text node')
 ```
